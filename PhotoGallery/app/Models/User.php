@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -42,4 +43,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    //Student one-to-one relationship
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
+
+
+    //Student one-to-one relationship
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
 }

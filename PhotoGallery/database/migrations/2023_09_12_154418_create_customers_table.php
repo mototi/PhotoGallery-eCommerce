@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('last_name')->nullable(false);
             $table->string('phone', 13)->nullable();
             $table->boolean('is_customer')->default(1);
+            $table->string('address')->nullable(false);
             $table->timestamps();
 
 
