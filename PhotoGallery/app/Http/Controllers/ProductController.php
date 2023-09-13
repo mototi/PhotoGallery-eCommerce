@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\File;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
+use App\Http\Requests\Products\UpdateProductRequest;
 use App\Http\Requests\Products\CreateProductRequest;
 use Illuminate\Http\Request;
 
@@ -47,7 +48,11 @@ class ProductController extends Controller
         ], 200);
     }
 
-
-
+    //update product
+    public function updateProduct(UpdateProductRequest $request)
+    {
+        $product = $request->putProduct();
+        return new ProductResource($product);
+    }
 
 }
