@@ -28,7 +28,20 @@ class ProductController extends Controller
     //get all products
     public function getAllProducts()
     {
-        $products = Product::with('admin')->get();
+        $products = Product::query();
+
+        $products->with(['admin']);
+
+        //filter by search
+        if(request()->has('search') && request()->search != ''){
+            $products->where('name', 'like', '%' . request()->search . '%');
+        }
+
+        //simple pabination
+        $products = $products->simplePaginate(
+            request()->per_page ?? 10 //default 10
+        );
+
         return ProductResource::collection($products);
     }
 

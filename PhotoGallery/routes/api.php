@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(
     [
-        'prefix' => 'v1',
+        'prefix' => 'dashboard',
         'namespace' => 'App\Http\Controllers',
     ],
     function (){
@@ -44,15 +44,29 @@ Route::group(
             ],
             function (){
                 // create product route
-                Route::post('/create', 'ProductController@createProduct');
+                Route::post('/create', 'ProductController@createProduct')->middleware('admin');
                 // get all products route
-                Route::get('/', 'ProductController@getAllProducts');
+                Route::get('/', 'ProductController@getAllProducts')->middleware('admin');
                 // get single product route
-                Route::get('/{id}', 'ProductController@getSingleProduct');
+                Route::get('/{id}', 'ProductController@getSingleProduct')->middleware('admin');
                 // update product route
-                Route::put('/', 'ProductController@updateProduct');
+                Route::put('/', 'ProductController@updateProduct')->middleware('admin');
                 // delete product route
                 Route::delete('/{id}', 'ProductController@deleteProduct')->middleware('admin');
+            }
+        );
+
+        // group customer routes
+        Route::group(
+            [
+                'prefix' => 'customers',
+                'middleware' => 'auth:sanctum'
+            ],
+            function (){
+                // get all customers route
+                Route::get('/', 'CustomersController@getAllCustomers')->middleware('admin');
+                // get single customer route
+                Route::get('/{id}', 'CustomersController@getSingleCustomer')->middleware('admin');
             }
         );
 
