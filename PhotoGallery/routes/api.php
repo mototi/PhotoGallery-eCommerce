@@ -50,9 +50,9 @@ Route::group(
                 // get single product route
                 Route::get('/{id}', 'ProductController@getSingleProduct');
                 // update product route
-                Route::put('/{id}', 'ProductController@updateProduct');
+                Route::put('/', 'ProductController@updateProduct');
                 // delete product route
-                Route::delete('/{id}', 'ProductController@deleteProduct');
+                Route::delete('/{id}', 'ProductController@deleteProduct')->middleware('admin');
             }
         );
 
