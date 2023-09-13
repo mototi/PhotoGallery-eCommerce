@@ -36,5 +36,25 @@ Route::group(
             }
         );
 
+        // group product routes
+        Route::group(
+            [
+                'prefix' => 'products',
+                'middleware' => 'auth:sanctum'
+            ],
+            function (){
+                // create product route
+                Route::post('/create', 'ProductController@createProduct');
+                // get all products route
+                Route::get('/', 'ProductController@getAllProducts');
+                // get single product route
+                Route::get('/{id}', 'ProductController@getSingleProduct');
+                // update product route
+                Route::put('/{id}', 'ProductController@updateProduct');
+                // delete product route
+                Route::delete('/{id}', 'ProductController@deleteProduct');
+            }
+        );
+
     }
 );
