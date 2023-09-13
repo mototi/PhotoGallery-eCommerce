@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->uniqid(); // foreign key
             $table->string('first_name')->nullable(false);
             $table->string('last_name')->nullable(false);
-            $table->string('phone', 11)->nullable();
+            $table->string('phone')->nullable();
             $table->boolean('is_admin')->default(1);
             $table->timestamps();
 

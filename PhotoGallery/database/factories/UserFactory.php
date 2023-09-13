@@ -35,4 +35,12 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    // add role to user
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'admin',
+        ]);
+    }
 }
