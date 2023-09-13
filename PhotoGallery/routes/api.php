@@ -32,7 +32,7 @@ Route::group(
                 // login route
                 Route::post('/login', 'AuthController@login');
                 // logout route
-                Route::post('/logout', 'AuthController@logout');
+                Route::post('/logout', 'AuthController@logout')->middleware('auth:sanctum');
             }
         );
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -35,6 +36,17 @@ class AuthController extends Controller
         return response([
             "message" => "User logged in successfully",
             "token" => $token['token']
+        ], 200);
+    }
+
+    //logout user
+    public function logout(Request $request)
+    {
+        //logout user
+        $request->user()->currentAccessToken()->delete();
+        //return response
+        return response([
+            "message" => "User logged out successfully",
         ], 200);
     }
 }

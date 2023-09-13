@@ -31,4 +31,9 @@ return [
 
     'supports_credentials' => false,
 
+    'api' => [
+        // ...
+        \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+    ],
+
 ];
