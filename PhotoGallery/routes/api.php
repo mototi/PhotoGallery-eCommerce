@@ -70,5 +70,22 @@ Route::group(
             }
         );
 
+        // group order routes
+        Route::group(
+            [
+                'prefix' => 'orders',
+                'middleware' => 'auth:sanctum'
+            ],
+            function (){
+                // get all orders route
+                Route::get('/', 'OrderController@getAllOrders')->middleware('admin');
+                // get single order route
+                Route::get('/{id}', 'OrderController@getSingleOrder')->middleware('admin');
+                // update order route
+                Route::put('/', 'OrderController@updateOrder')->middleware('admin');
+
+            }
+        );
+
     }
 );
