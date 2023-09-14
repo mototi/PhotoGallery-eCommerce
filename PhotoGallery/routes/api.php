@@ -89,3 +89,27 @@ Route::group(
 
     }
 );
+
+// landing page
+Route::group(
+    [
+        'prefix' => 'website',
+        'namespace' => 'App\Http\Controllers',
+    ],
+    function (){
+        // group auth routes
+        Route::group(
+            [
+                'prefix' => 'auth'
+            ],
+            function (){
+                // register route
+                Route::post('/register', 'AuthController@customerRegister');
+                // login route
+                Route::post('/login', 'AuthController@login');
+                // logout route
+                Route::post('/logout', 'AuthController@logout')->middleware('auth:sanctum');
+            }
+        );
+    }
+);
