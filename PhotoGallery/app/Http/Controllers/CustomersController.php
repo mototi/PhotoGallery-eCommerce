@@ -36,4 +36,19 @@ class CustomersController extends Controller
             'data' => new CustomerResource($customer)
         ]);
     }
+
+    // let customer get his/her profile details
+    public function getCustomerProfile(){
+        $customer = Customer::where('user_id', auth()->user()->id)->first();
+        if(!$customer){
+            return response()->json([
+                'message' => 'Customer not found',
+                'data' => null
+            ]);
+        }
+        return response()->json([
+            'message' => 'Customer fetched successfully',
+            'data' => new CustomerResource($customer)
+        ]);
+    }
 }

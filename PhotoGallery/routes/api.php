@@ -121,6 +121,31 @@ Route::group(
             function (){
                 // get all products route
                 Route::get('/', 'ProductController@getAllProducts');
+                // get single product route
+                Route::get('/{id}', 'ProductController@getSingleProduct');
+            }
+        );
+        // group profile routes
+        Route::group(
+            [
+                'prefix' => 'profile',
+                "middleware" => "auth:sanctum",
+            ],
+            function (){
+                // get customer's own profile route
+                Route::get('/', 'CustomersController@getCustomerProfile');
+            }
+        );
+
+        // group order routes
+        Route::group(
+            [
+                'prefix' => 'orders',
+                "middleware" => "auth:sanctum",
+            ],
+            function (){
+                // create order route
+                Route::post('/create', 'OrderController@createOrder');
             }
         );
     }
