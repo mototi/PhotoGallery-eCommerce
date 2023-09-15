@@ -111,5 +111,17 @@ Route::group(
                 Route::post('/logout', 'AuthController@logout')->middleware('auth:sanctum');
             }
         );
+
+        // group product routes
+        Route::group(
+            [
+                'prefix' => 'products',
+                "middleware" => "auth:sanctum",
+            ],
+            function (){
+                // get all products route
+                Route::get('/', 'ProductController@getAllProducts');
+            }
+        );
     }
 );

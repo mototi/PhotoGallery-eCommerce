@@ -37,6 +37,11 @@ class ProductController extends Controller
             $products->where('name', 'like', '%' . request()->search . '%');
         }
 
+        //filter by category
+        if(request()->has('category') && request()->category != ''){
+            $products->where('category', 'like' , '%' . request()->category . '%');
+        }
+
         //simple pabination
         $products = $products->simplePaginate(
             request()->per_page ?? 10 //default 10
