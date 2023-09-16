@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id'); // foreign key
+            $table->unsignedBigInteger('cart_id'); // foreign key
             $table->integer('number')->uniqid();
             $table->enum("status" , ["on it" , "shipped" , "delieverd" , "canceled"]) ->default("on it");
             $table->integer('total_price');
@@ -25,6 +26,11 @@ return new class extends Migration
             ->references('id')
             ->on('customers')
             ->onDelete('cascade'); // customer is deleted, delete the order too
+
+            $table->foreign('cart_id')
+            ->references('id')
+            ->on('carts')
+            ->onDelete('restrict'); // cart is deleted, dont delete the order
         });
     }
 

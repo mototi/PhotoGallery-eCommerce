@@ -14,9 +14,9 @@ class OrderController extends Controller
     {
         $order = $request->placeOrder();
 
-        if(!$order) {
+        if($order['status'] == false) {
             return response()->json([
-                'message' => 'some items are not available',
+                'message' => $order['message'],
             ], 400);
         }
 

@@ -44,7 +44,11 @@ class AddProductToOrderRequest extends FormRequest
 
         $customer = Customer::where('user_id', auth()->user()->id)->first();
 
-        $customer -> product() -> attach($product->id, [
+        // get the id of customer's cart that has the biggist id
+        $cart = $customer->cart()->orderBy('id', 'desc')->first();
+
+
+        $cart -> product() -> attach($product->id, [
             'quantity' => $this->quantity,
             'price' => $price,
         ]);

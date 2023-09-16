@@ -21,7 +21,7 @@ class Cart extends Model
     }
 
     // product many to many relationship with pivot quanity and price
-    public function products()
+    public function product()
     {
         return $this->belongsToMany(Product::class)
         ->withPivot('quantity', 'price');
