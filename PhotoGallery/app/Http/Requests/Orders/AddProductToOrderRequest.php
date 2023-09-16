@@ -33,14 +33,14 @@ class AddProductToOrderRequest extends FormRequest
     /**
      * add product to order
      */
-    public function addProductToOrder(): void
+    public function addProductToOrder(): bool
     {
         $product = Product::findOrFail($this->product_id);
         $price = $product->price;
 
         //check if yhe quantity is available
         if ($product->stock < $this->quantity) {
-            abort(400, 'The quantity you requested is not available');
+            return false;
         }
 
         $customer = Customer::where('user_id', auth()->user()->id)->first();
@@ -49,5 +49,6 @@ class AddProductToOrderRequest extends FormRequest
             'quantity' => $this->quantity,
             'price' => $price,
         ]);
+        return true;
     }
 }

@@ -11,7 +11,11 @@ class OrderController extends Controller
     //add product to order
     public function addProductToCart(AddProductToOrderRequest $request)
     {
-        $request->addProductToOrder();
+        if (!$request->addProductToOrder()) {
+            return response()->json([
+                'message' => 'qantity not available',
+            ], 400);
+        }
 
         return response ()->json([
             'message' => 'Product added to cart successfully',
