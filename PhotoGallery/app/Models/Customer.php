@@ -30,11 +30,10 @@ class Customer extends Model
         return $this->hasMany(Order::class);
     }
 
-    //products many-to-many relationship
-    public function product()
+    //cart one to many  relationship
+    public function cart()
     {
-        //with pivot
-        return $this->belongsToMany(Product::class)
-            -> withPivot('quantity', 'price');
+        return $this->hasMany(Cart::class);
     }
+
 }

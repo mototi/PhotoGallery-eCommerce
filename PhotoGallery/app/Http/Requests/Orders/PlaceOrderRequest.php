@@ -59,7 +59,12 @@ class PlaceOrderRequest extends FormRequest
             'date' => now(),
         ]);
 
-        $customer->product()->detach();
+        //update status of products in cart
+        foreach ($cart as $item) {
+            $item->update([
+                'stock' => $item->stock - $item->pivot->quantity,
+            ]);
+        }
 
         return $order;
 

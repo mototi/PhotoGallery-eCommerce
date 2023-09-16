@@ -15,6 +15,9 @@ class CustomerResource extends JsonResource
     public function toArray(Request $request): array
     {
         $orders = $this->order()->get();
+
+        $orders->makeHidden(['customer_id', 'created_at', 'updated_at']);
+
         return [
             "id" => $this->id,
             "user_id" => $this->user_id,
