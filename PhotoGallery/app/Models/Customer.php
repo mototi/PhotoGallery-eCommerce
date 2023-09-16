@@ -29,4 +29,13 @@ class Customer extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    //products many-to-many relationship
+    public function product()
+    {
+        //with pivot
+        return $this->belongsToMany(Product::class)
+            -> withPivot('quantity', 'price')
+            ->using(ProductCustomer::class);
+    }
 }

@@ -15,6 +15,7 @@ class Order extends Model
         'number',
         'status',
         'date',
+        'total_price',
     ];
 
     //customer many-to-one relationship
@@ -23,9 +24,4 @@ class Order extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    //product many-to-many relationship
-    public function product()
-    {
-        return $this->hasMany(Product::class);
-    }
 }

@@ -11,21 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_order', function (Blueprint $table) {
+        Schema::create('customer_product', function (Blueprint $table) {
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('customer_id');
 
-            $table->primary(['product_id', 'order_id']);
+            $table->integer('quantity')->default(1);
+            $table->integer('price')->nullable(false);
+
+            $table->primary(['product_id', 'customer_id']);
 
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')
                 ->OnDelete('strict'); // if product is deleted, transaction is not deleted
 
-            $table->foreign('order_id')
+            $table->foreign('customer_id')
                 ->references('id')
-                ->on('orders')
-                ->OnDelete('cascade'); // if order is deleted, transaction is deleted too
+                ->on('customers')
+                ->OnDelete('cascade'); // if customer is deleted, transaction is deleted too
         });
     }
 
@@ -34,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_order');
+        Schema::dropIfExists('product_customer');
     }
 };

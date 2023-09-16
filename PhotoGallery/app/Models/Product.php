@@ -25,10 +25,12 @@ class Product extends Model
         return $this->belongsTo(Admin::class);
     }
 
-    //order many-to-many relationship
-    public function order()
+    //customer many-to-many relationship
+    public function customer()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsToMany(Customer::class)
+            -> withPivot('quantity', 'price')
+            ->useing(ProductCustomer::class);
     }
 
 }

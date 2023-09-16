@@ -146,6 +146,8 @@ Route::group(
             function (){
                 // create order route
                 Route::post('/create', 'OrderController@createOrder');
+                // add product to order route
+                Route::post('/add-product', 'OrderController@addProductToCart');
             }
         );
     }

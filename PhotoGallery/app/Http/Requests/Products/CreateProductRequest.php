@@ -25,7 +25,6 @@ class CreateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "admin_id" => "required|integer|exists:admins,id",
             "name" => "required|string",
             "description" => "string|max:5000",
             "price" => "required|numeric",
@@ -47,8 +46,10 @@ class CreateProductRequest extends FormRequest
 
         $this -> image -> move($path, $file_name);
 
+        $admin_id = auth()->user()->admin()->first()->id;
+
         $product = Product::create([
-            "admin_id" => $this->admin_id,
+            "admin_id" => $admin_id,
             "name" => $this->name,
             "description" => $this->description,
             "price" => $this->price,
