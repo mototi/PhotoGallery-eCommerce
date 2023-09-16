@@ -13,8 +13,7 @@ class AddProductToOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
-        //return auth()->user()->isCustomer();
+        return auth()->user()->isCustomer();
     }
 
     /**
@@ -49,6 +48,12 @@ class AddProductToOrderRequest extends FormRequest
             'quantity' => $this->quantity,
             'price' => $price,
         ]);
+
+        //update the stock
+        $product->update([
+            'stock' => $product->stock - $this->quantity,
+        ]);
+
         return true;
     }
 }

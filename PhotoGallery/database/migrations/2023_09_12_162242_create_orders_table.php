@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id'); // foreign key
             $table->integer('number')->uniqid();
-            $table->enum("status" , ["shipped" , "delieverd" , "canceled"]);
+            $table->enum("status" , ["on it" , "shipped" , "delieverd" , "canceled"]);
             $table->integer('total_price');
             $table->date('date')->nullable(false);
             $table->timestamps();
