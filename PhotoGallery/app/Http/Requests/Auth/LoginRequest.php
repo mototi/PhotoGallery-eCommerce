@@ -47,13 +47,26 @@ class LoginRequest extends FormRequest
             // generate token
             $token = auth()->user()->createToken('auth_token')->plainTextToken;
 
+            // create new cart if the login is customer
+            if(auth()->user()->isCustomer()){
+                // delete all carts that has total price 0
+                auth()->user()->customer->cart()->where('total_price', 0)->delete();
+                // create new cart
+                auth()->user()->customer->cart()->create([
+                    'total_price' => 0
+                ]);
+            }
+
             return [
                 "success" => true,
                 "token" => $token
             ];
 
         }catch(\Exception $e){
-            return $e->getMessage();
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
         }
     }
 }
