@@ -35,7 +35,6 @@ class Customer extends Model
     {
         //with pivot
         return $this->belongsToMany(Product::class)
-            -> withPivot('quantity', 'price')
-            ->using(ProductCustomer::class);
+            -> withPivot('quantity', 'price');
     }
 }

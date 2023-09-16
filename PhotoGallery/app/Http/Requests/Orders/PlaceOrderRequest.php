@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Orders;
 
+use App\Models\Product;
+use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PlaceOrderRequest extends FormRequest
@@ -11,7 +13,7 @@ class PlaceOrderRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->isCustomer();
     }
 
     /**
@@ -24,5 +26,42 @@ class PlaceOrderRequest extends FormRequest
         return [
             //
         ];
+    }
+
+    //place order
+    public function placeOrder()
+    {
+        $customer = auth()->user()->customer;
+
+        $cart = $customer->product()->where('customer_id', $customer->id)->get();
+
+        //return false if cart is empty
+        if ($cart->isEmpty()) {
+            return false;
+        }
+
+        //total price
+        $total_price =  $cart->sum(function ($item) {
+            return $item->price * $item->pivot->quantity;
+        });
+
+        foreach ($cart as $item) {
+            if ($item->stock < $item->pivot->quantity) {
+                return false;
+            }
+        }
+
+        $order = Order::create([
+            'customer_id' => $customer->id,
+            'total_price' => $total_price,
+            'status' => 'on it',
+            'number' => rand(100000, 999999),
+            'date' => now(),
+        ]);
+
+        $customer->product()->detach();
+
+        return $order;
+
     }
 }

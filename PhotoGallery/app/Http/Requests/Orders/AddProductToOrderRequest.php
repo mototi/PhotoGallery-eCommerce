@@ -49,11 +49,8 @@ class AddProductToOrderRequest extends FormRequest
             'price' => $price,
         ]);
 
-        //update the stock
-        $product->update([
-            'stock' => $product->stock - $this->quantity,
-        ]);
 
         return true;
     }
+
 }

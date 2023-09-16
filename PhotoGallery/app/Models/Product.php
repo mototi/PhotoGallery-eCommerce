@@ -29,8 +29,7 @@ class Product extends Model
     public function customer()
     {
         return $this->belongsToMany(Customer::class)
-            -> withPivot('quantity', 'price')
-            ->useing(ProductCustomer::class);
+            -> withPivot('quantity', 'price');
     }
 
 }

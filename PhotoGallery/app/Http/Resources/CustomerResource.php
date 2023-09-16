@@ -14,6 +14,7 @@ class CustomerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $orders = $this->order()->get();
         return [
             "id" => $this->id,
             "user_id" => $this->user_id,
@@ -21,6 +22,7 @@ class CustomerResource extends JsonResource
             "name" => $this->user->name,
             "phone" => $this->phone,
             "address" => $this->address,
+            "orders" => $orders,
         ];
     }
 }
