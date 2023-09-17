@@ -39,4 +39,31 @@ class OrderController extends Controller
             'message' => 'Product added to cart successfully',
         ], 201);
     }
+
+    //remove product from order
+    public function removeProductFromCart(AddProductToOrderRequest $request)
+    {
+        $request->removeProductFromOrder();
+
+        return response()->json([
+            'message' => 'Product removed from cart successfully',
+        ], 200);
+    }
+
+    //update product quantity in order
+    public function updateProductQuantityInCart(AddProductToOrderRequest $request)
+    {
+        $request = $request->changeProductQuantityInOrder();
+
+        if (!$request) {
+            return response()->json([
+                'message' => 'qantity not available',
+            ], 400);
+        }
+
+        return response()->json([
+            'message' => 'Product quantity updated successfully',
+        ], 200);
+    }
+
 }

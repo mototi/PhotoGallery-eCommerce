@@ -21,6 +21,8 @@ return new class extends Migration
             $table->date('date')->nullable(false);
             $table->timestamps();
 
+            //  make customer_id and cart_id unique
+            $table->unique(['customer_id', 'cart_id']);
 
             $table->foreign('customer_id')
             ->references('id')

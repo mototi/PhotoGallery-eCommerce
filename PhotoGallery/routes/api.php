@@ -148,6 +148,15 @@ Route::group(
                 Route::post('/create', 'OrderController@createOrder');
                 // add product to order route
                 Route::post('/add-product', 'OrderController@addProductToCart');
+
+                // remove product from order route
+                Route::delete('/remove-product', 'OrderController@removeProductFromCart');
+
+                // update product quantity in order route
+                Route::put('/update-product-quantity', 'OrderController@updateProductQuantityInCart');
+
+                // get order route
+                Route::get('/', 'OrderController@getOrder');
             }
         );
     }

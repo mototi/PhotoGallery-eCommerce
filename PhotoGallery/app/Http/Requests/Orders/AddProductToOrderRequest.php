@@ -34,6 +34,7 @@ class AddProductToOrderRequest extends FormRequest
      */
     public function addProductToOrder(): bool
     {
+
         $product = Product::findOrFail($this->product_id);
         $price = $product->price;
 
@@ -47,12 +48,61 @@ class AddProductToOrderRequest extends FormRequest
         // get the id of customer's cart that has the biggist id
         $cart = $customer->cart()->orderBy('id', 'desc')->first();
 
+        /**
+         * if the cart has total price  that means that this customer already has order and we need to create new cart
+         */
+        if ($cart -> total_price != 0) {
+            $cart = $customer->cart()->create();
+        }
 
-        $cart -> product() -> attach($product->id, [
+        try{
+            $cart -> product() -> attach($product->id, [
+                'quantity' => $this->quantity,
+                'price' => $price,
+            ]);
+        }catch (\Exception $e){
+            // if the product is already in the cart
+            $cart->product()->updateExistingPivot($product->id, [
+                'quantity' => $this->quantity,
+            ]);
+        }
+
+        return true;
+    }
+
+    // remove product from order
+    public function removeProductFromOrder(): bool
+    {
+        $product = Product::findOrFail($this->product_id);
+
+        $customer = Customer::where('user_id', auth()->user()->id)->first();
+
+        // get the id of customer's cart that has the biggist id
+        $cart = $customer->cart()->orderBy('id', 'desc')->first();
+
+        $cart->product()->detach($product->id);
+
+        return true;
+    }
+
+    // change product quantity in order
+    public function changeProductQuantityInOrder(): bool
+    {
+        $product = Product::findOrFail($this->product_id);
+
+        // check if the quantity is available
+        if ($product->stock < $this->quantity) {
+            return false;
+        }
+
+        $customer = Customer::where('user_id', auth()->user()->id)->first();
+
+        // get the id of customer's cart that has the biggist id
+        $cart = $customer->cart()->orderBy('id', 'desc')->first();
+
+        $cart->product()->updateExistingPivot($product->id, [
             'quantity' => $this->quantity,
-            'price' => $price,
         ]);
-
 
         return true;
     }
