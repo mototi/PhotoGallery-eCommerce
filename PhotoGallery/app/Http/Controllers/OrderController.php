@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Orders\GetOrderRequest;
 use App\Http\Requests\Orders\PlaceOrderRequest;
 use App\Http\Requests\Orders\AddProductToOrderRequest;
 use Illuminate\Http\Request;
@@ -63,6 +64,17 @@ class OrderController extends Controller
 
         return response()->json([
             'message' => 'Product quantity updated successfully',
+        ], 200);
+    }
+
+    //get order
+    public function getOrder(GetOrderRequest $request)
+    {
+        $order = $request->getOrder();
+
+        return response()->json([
+            'message' => 'Order retrieved successfully',
+            'order' => $order,
         ], 200);
     }
 

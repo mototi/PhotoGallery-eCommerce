@@ -84,6 +84,9 @@ Route::group(
                 // update order route
                 Route::put('/', 'OrderController@updateOrder')->middleware('admin');
 
+                // get order route
+                Route::get('/', 'OrderController@getOrder')->middleware('admin');
+
             }
         );
 
