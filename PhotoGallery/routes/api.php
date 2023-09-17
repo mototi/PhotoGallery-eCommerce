@@ -78,14 +78,13 @@ Route::group(
             ],
             function (){
                 // get all orders route
-                Route::get('/', 'OrderController@getAllOrders')->middleware('admin');
+                Route::get('/all', 'OrderController@getAllOrders')->middleware('admin');
                 // get single order route
                 Route::get('/{id}', 'OrderController@getSingleOrder')->middleware('admin');
-                // update order route
-                Route::put('/', 'OrderController@updateOrder')->middleware('admin');
-
                 // get order route
                 Route::get('/', 'OrderController@getOrder')->middleware('admin');
+                // update order status route
+                Route::put('/update-status', 'OrderController@updateOrderStatus')->middleware('admin');
 
             }
         );
