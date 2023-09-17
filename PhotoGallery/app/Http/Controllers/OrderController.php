@@ -72,10 +72,14 @@ class OrderController extends Controller
     {
         $order = $request->getOrder();
 
-        return response()->json([
-            'message' => 'Order retrieved successfully',
-            'order' => $order,
-        ], 200);
+        if($order['status'] == false) {
+            return response()->json([
+                'status' => false,
+                'message' => $order['message'],
+            ], 400);
+        }
+
+        return response()->json( $order , 200);
     }
 
 }

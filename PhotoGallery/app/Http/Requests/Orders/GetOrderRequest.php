@@ -42,7 +42,11 @@ class GetOrderRequest extends FormRequest
 
         // admin is autharized to view all orders
         if(auth()->user()->isAdmin()) {
-            return $this->getCustomerOrder($order);
+            return [
+                'status' => true,
+                'message' => 'Order retrieved successfully',
+                'order' => $this->getCustomerOrder($order),
+            ];
         }
 
         $customer = auth()->user()-> customer;
@@ -53,8 +57,15 @@ class GetOrderRequest extends FormRequest
                 'message' => 'You are not authorized to view this order',
             ];
         }
-        return $this->getCustomerOrder($order);
+
+        return [
+            'status' => true,
+            'message' => 'Order retrieved successfully',
+            'order' => $this->getCustomerOrder($order),
+        ];
     }
+
+
 
     /**
      * Get order
